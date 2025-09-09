@@ -1,0 +1,57 @@
+/* src/App.css */
+
+/* base del blob */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.95;
+  transform-origin: center;
+  will-change: transform;
+  animation: blob-move 7s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+/* tamaños / colores / posiciones iniciales */
+.blob.purple {
+  width: 180px;
+  height: 180px;
+  left: 40%;
+  top: 60%;
+  background: radial-gradient(circle at 30% 30%, #b57bff 0%, #7c3aed 60%);
+  animation-duration: 7s;
+}
+.blob.pink {
+  width: 220px;
+  height: 220px;
+  left: 55%;
+  top: 30%;
+  background: radial-gradient(circle at 30% 30%, #ff80bf 0%, #ff4da6 60%);
+  animation-duration: 9s;
+  animation-delay: -2s;
+}
+.blob.blue {
+  width: 140px;
+  height: 140px;
+  left: 20%;
+  top: 35%;
+  background: radial-gradient(circle at 30% 30%, #6ecbff 0%, #3b82f6 60%);
+  animation-duration: 6s;
+  animation-delay: -1s;
+}
+
+/* movimiento (usar translate3d para mejor rendimiento GPU) */
+@keyframes blob-move {
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  25%  { transform: translate3d(90px,-60px,0) scale(1.08); }
+  50%  { transform: translate3d(-70px,120px,0) scale(0.95); }
+  75%  { transform: translate3d(100px,80px,0) scale(1.05); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+
+/* responsive: reducir tamaños en pantallas pequeñas */
+@media (max-width: 640px) {
+  .blob.purple { width: 120px; height: 120px; }
+  .blob.pink   { width: 160px; height: 160px; }
+  .blob.blue   { width: 100px; height: 100px; }
+  .blob { opacity: 0.9; animation-duration: 6s; }
+}

@@ -1,0 +1,36 @@
+.blob {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  animation: blob-move 6s ease-in-out infinite;
+}
+
+.blob:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  animation-duration: 8s;
+  animation-delay: -2s;
+}
+
+.blob:nth-child(3) {
+  width: 120px;
+  height: 120px;
+  animation-duration: 5s;
+  animation-delay: -1s;
+}
+
+@keyframes blob-move {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(150px, -100px);
+  }
+  50% {
+    transform: translate(-100px, 150px);
+  }
+  75% {
+    transform: translate(100px, 100px);
+  }
+}
