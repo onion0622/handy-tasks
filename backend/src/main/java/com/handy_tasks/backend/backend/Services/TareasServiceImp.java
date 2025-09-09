@@ -1,50 +1,72 @@
 package com.handy_tasks.backend.backend.Services;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import com.handy_tasks.backend.backend.Model.Tareas;
+import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoTareas;
+import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
 
 public class TareasServiceImp implements TareasService{
 
     @Autowired
     private RepoTareas repotareas;
+    @Autowired
+    private RepoUsuarios repousuarios;
 
     @Override
-    public List<Tareas> findAllTareas() {
-        
-        return repotareas.findAll();
+    public List<Tareas> obtenerTareasPorUser(Integer iduser) {
+
+        Usuarios usuario = repousuarios.findById(iduser)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
+
+        return usuario.getTarea();
 
     }
-
     @Override
-    public Optional<Tareas> findByIdTareas(Integer id) {
+    public Tareas crearTareas(Integer iduser, Tareas tarea) {
         
-        return repotareas.findById(id);
+        Usuarios usuario = repousuarios.findById(iduser)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
 
-    }
-
-    @Override
-    public Tareas craerTareas(Tareas tarea) {
-        
-        return repotareas.save(tarea);
-
-    }
-
-    @Override
-    public Tareas actualizarTareas(Tareas tarea) {
+        tarea.setUsuario(usuario);
+        tarea.setFecha_creacion(LocalDateTime.now());
         
         return repotareas.save(tarea);
-
-    }
-
-    @Override
-    public void eliminarTarea(Integer id) {
         
-        repotareas.deleteById(id);
+    }
+    @Override
+    public Tareas actualizarTareas(Integer iduser, Integer idtarea, Tareas tarea) {
+
+        Tareas tarea1 = repotareas.findById(idtarea)
+        .orElseThrow(() -> new RuntimeException("Tarea no encontrada..."));
+
+        if(!tarea1.getUsuario().getId().equals(iduser)){
+
+            throw new RuntimeException("La tarea no pertence a este user...");
+        }
+
+
+        tarea1.setTitulo(tarea.getTitulo());
+        tarea1.setDescripcion(tarea.getDescripcion());
+        tarea1.setCompletada(tarea.isCompletada());
+
+        return repotareas.save(tarea1);
 
     }
-    
+    @Override
+    public void eliminarTarea(Integer iduser, Integer idtarea) {
+        
+        Tareas tarea = repotareas.findById(idtarea)
+        .orElseThrow(() -> new RuntimeException("Tarea no encontrada..."));
+
+        if(!tarea.getUsuario().getId().equals(iduser)){
+
+            throw new RuntimeException("No esta autorizado para borrar esta tarea");
+        }
+        else{
+        repotareas.delete(tarea);
+        }
+    }    
 }

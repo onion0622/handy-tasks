@@ -1,5 +1,5 @@
 package com.handy_tasks.backend.backend.Services;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,14 +30,23 @@ public class UsuariosServiceImp implements UsuariosService{
     @Override
     public Usuarios crearUsuario(Usuarios usuario) {
 
+        usuario.setFecha_creacion(LocalDateTime.now());
         return repousuarios.save(usuario);
        
     }
 
     @Override
-    public Usuarios actualizarUsuario(Usuarios usuario) {
+    public Usuarios actualizarUsuario(Integer id, Usuarios usuario) {
+
+        Usuarios usuarioactualizado = repousuarios.findById(id)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
+
+        usuarioactualizado.setNombre(usuario.getNombre());
+        usuarioactualizado.setContraseña(usuario.getContraseña());
+        usuarioactualizado.setEmail(usuario.getContraseña());
         
-        return repousuarios.save(usuario);
+        
+        return repousuarios.save(usuarioactualizado);
        
     }
 
