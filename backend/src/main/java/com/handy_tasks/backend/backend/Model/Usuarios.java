@@ -1,4 +1,4 @@
-package com.handy_tasks.backend.backend.Entidades;
+package com.handy_tasks.backend.backend.Model;
 import java.time.LocalDateTime;
 import java.util.List;
 
