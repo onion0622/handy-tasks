@@ -1,57 +1,70 @@
-/* src/App.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
-/* base del blob */
-.blob {
+/* Fondo lava líquido */
+.lava-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Cada gradiente como capa independiente */
+.lava-background::before,
+.lava-background::after,
+.lava-background div {
+  content: '';
   position: absolute;
+  inset: 0;
   border-radius: 50%;
-  opacity: 0.95;
-  transform-origin: center;
-  will-change: transform;
-  animation: blob-move 7s ease-in-out infinite;
+  filter: blur(80px) saturate(150%);
   mix-blend-mode: screen;
 }
 
-/* tamaños / colores / posiciones iniciales */
-.blob.purple {
-  width: 180px;
-  height: 180px;
-  left: 40%;
-  top: 60%;
-  background: radial-gradient(circle at 30% 30%, #b57bff 0%, #7c3aed 60%);
-  animation-duration: 7s;
-}
-.blob.pink {
-  width: 220px;
-  height: 220px;
-  left: 55%;
-  top: 30%;
-  background: radial-gradient(circle at 30% 30%, #ff80bf 0%, #ff4da6 60%);
-  animation-duration: 9s;
-  animation-delay: -2s;
-}
-.blob.blue {
-  width: 140px;
-  height: 140px;
-  left: 20%;
-  top: 35%;
-  background: radial-gradient(circle at 30% 30%, #6ecbff 0%, #3b82f6 60%);
-  animation-duration: 6s;
-  animation-delay: -1s;
+/* Gradiente 1 */
+.lava-background::before {
+  background: radial-gradient(circle at 20% 30%, #ff2d55, transparent 40%);
+  animation: lava1 40s ease-in-out infinite alternate;
 }
 
-/* movimiento (usar translate3d para mejor rendimiento GPU) */
-@keyframes blob-move {
-  0%   { transform: translate3d(0,0,0) scale(1); }
-  25%  { transform: translate3d(90px,-60px,0) scale(1.08); }
-  50%  { transform: translate3d(-70px,120px,0) scale(0.95); }
-  75%  { transform: translate3d(100px,80px,0) scale(1.05); }
-  100% { transform: translate3d(0,0,0) scale(1); }
+/* Gradiente 2 */
+.lava-background::after {
+  background: radial-gradient(circle at 80% 40%, #007aff, transparent 45%);
+  animation: lava2 45s ease-in-out infinite alternate;
 }
 
-/* responsive: reducir tamaños en pantallas pequeñas */
-@media (max-width: 640px) {
-  .blob.purple { width: 120px; height: 120px; }
-  .blob.pink   { width: 160px; height: 160px; }
-  .blob.blue   { width: 100px; height: 100px; }
-  .blob { opacity: 0.9; animation-duration: 6s; }
+/* Gradiente 3 */
+.lava-background div {
+  background: radial-gradient(circle at 50% 80%, #ff3b30, transparent 50%);
+  animation: lava3 50s ease-in-out infinite alternate;
+}
+
+/* Animaciones suaves independientes */
+@keyframes lava1 {
+  0%   { transform: translate(0%,0%) scale(1); }
+  25%  { transform: translate(3%, 2%) scale(1.02); }
+  50%  { transform: translate(-2%, 3%) scale(0.98); }
+  75%  { transform: translate(1%, -2%) scale(1.01); }
+  100% { transform: translate(0%,0%) scale(1); }
+}
+
+@keyframes lava2 {
+  0%   { transform: translate(0%,0%) scale(1); }
+  25%  { transform: translate(-3%, -1%) scale(1.01); }
+  50%  { transform: translate(2%, 2%) scale(0.99); }
+  75%  { transform: translate(-1%, 1%) scale(1.02); }
+  100% { transform: translate(0%,0%) scale(1); }
+}
+
+@keyframes lava3 {
+  0%   { transform: translate(0%,0%) scale(1); }
+  25%  { transform: translate(1%, -3%) scale(1.01); }
+  50%  { transform: translate(-2%, 1%) scale(0.98); }
+  75%  { transform: translate(2%, 0%) scale(1.02); }
+  100% { transform: translate(0%,0%) scale(1); }
 }
