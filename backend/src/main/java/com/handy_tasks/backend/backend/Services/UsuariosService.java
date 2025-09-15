@@ -10,7 +10,7 @@ public interface UsuariosService {
     public List<Usuarios> findAllUsuarios();
     public Optional<Usuarios> findByIdUsuarios(Integer id);
     public Usuarios crearUsuario(Usuarios usuario);
-    public Usuarios actualizarUsuario(Integer id, Usuarios usuario);
+    public Optional<Usuarios> actualizarUsuario(Integer id, Usuarios usuario);
     public void eliminarUsuario(Integer id);
     
 }

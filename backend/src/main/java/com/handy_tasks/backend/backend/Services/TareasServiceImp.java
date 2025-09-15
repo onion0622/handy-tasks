@@ -42,7 +42,7 @@ public class TareasServiceImp implements TareasService{
         Tareas tarea1 = repotareas.findById(idtarea)
         .orElseThrow(() -> new RuntimeException("Tarea no encontrada..."));
 
-        if(!tarea1.getUsuario().getId().equals(iduser)){
+        if(!tarea1.getUsuario().getIduser().equals(iduser)){
 
             throw new RuntimeException("La tarea no pertence a este user...");
         }
@@ -61,7 +61,7 @@ public class TareasServiceImp implements TareasService{
         Tareas tarea = repotareas.findById(idtarea)
         .orElseThrow(() -> new RuntimeException("Tarea no encontrada..."));
 
-        if(!tarea.getUsuario().getId().equals(iduser)){
+        if(!tarea.getUsuario().getIduser().equals(iduser)){
 
             throw new RuntimeException("No esta autorizado para borrar esta tarea");
         }

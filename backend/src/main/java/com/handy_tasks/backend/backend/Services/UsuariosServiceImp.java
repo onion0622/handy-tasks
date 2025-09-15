@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.handy_tasks.backend.backend.Model.Rol;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
 
@@ -23,7 +24,7 @@ public class UsuariosServiceImp implements UsuariosService{
 
     @Override
     public Optional<Usuarios> findByIdUsuarios(Integer id) {
-        
+
         return repousuarios.findById(id);
     }
 
@@ -31,14 +32,21 @@ public class UsuariosServiceImp implements UsuariosService{
     public Usuarios crearUsuario(Usuarios usuario) {
 
         usuario.setFecha_creacion(LocalDateTime.now());
+        usuario.setRol(Rol.USER);
         return repousuarios.save(usuario);
        
     }
 
     @Override
-    public Usuarios actualizarUsuario(Integer id, Usuarios usuario) {
+    public Optional<Usuarios> actualizarUsuario(Integer id, Usuarios usuario) {
 
-        Usuarios usuarioactualizado = repousuarios.findById(id)
+       return repousuarios.findById(id).map(usuarioActualizado -> {
+        usuarioActualizado.setNombre(usuario.getNombre());
+        usuarioActualizado.setEmail(usuario.getEmail());
+        usuarioActualizado.setContraseña(usuario.getContraseña());
+        return repousuarios.save(usuarioActualizado); 
+    });
+        /*Usuarios usuarioactualizado = repousuarios.findById(id)
         .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
 
         usuarioactualizado.setNombre(usuario.getNombre());
@@ -47,7 +55,7 @@ public class UsuariosServiceImp implements UsuariosService{
         
         
         return repousuarios.save(usuarioactualizado);
-       
+       */
     }
 
     @Override
