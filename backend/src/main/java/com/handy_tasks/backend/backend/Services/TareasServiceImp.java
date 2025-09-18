@@ -2,18 +2,23 @@ package com.handy_tasks.backend.backend.Services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.handy_tasks.backend.backend.Model.Tareas;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoTareas;
 import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
 
+@Service
 public class TareasServiceImp implements TareasService{
 
     @Autowired
     private RepoTareas repotareas;
     @Autowired
     private RepoUsuarios repousuarios;
+    @Autowired
+    private RepoTareas repoTareas;
 
     @Override
     public List<Tareas> obtenerTareasPorUser(Integer iduser) {
@@ -23,6 +28,18 @@ public class TareasServiceImp implements TareasService{
 
         return usuario.getTarea();
 
+    }
+    @Override
+    public List<Tareas> obtenerTodas() {
+        return repoTareas.findAll();  
+    }
+    @Override
+    public List<Tareas> obtenerTareasCompletadas() {
+        return repoTareas.findByCompletada(true);
+    }
+    @Override
+    public List<Tareas> obtenerTareasPendientes() {
+        return repoTareas.findByCompletada(false);
     }
     @Override
     public Tareas crearTareas(Integer iduser, Tareas tarea) {
