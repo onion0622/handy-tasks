@@ -49,7 +49,6 @@ public class TareasServiceImp implements TareasService{
 
 
         tarea1.setTitulo(tarea.getTitulo());
-        tarea1.setDescripcion(tarea.getDescripcion());
         tarea1.setCompletada(tarea.isCompletada());
 
         return repotareas.save(tarea1);

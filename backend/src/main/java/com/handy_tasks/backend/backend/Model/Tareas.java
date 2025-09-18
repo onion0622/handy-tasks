@@ -20,7 +20,7 @@ public class Tareas {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer idtarea;
-    private String titulo, descripcion;
+    private String titulo;
     private Date fecha_limite;
     private boolean completada;
     private LocalDateTime fecha_creacion;
