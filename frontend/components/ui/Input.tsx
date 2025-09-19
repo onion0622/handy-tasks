@@ -1,18 +1,11 @@
-import { TextInput, StyleSheet } from "react-native";
+// components/ui/Input.tsx
+import React from "react";
+import { TextInput, StyleSheet, TextInputProps } from "react-native";
 
-type InputProps = {
-  placeholder: string;
-  secureTextEntry?: boolean;
-};
+export type InputProps = TextInputProps; // acepta value, onChangeText, secureTextEntry, etc.
 
-export default function Input({ placeholder, secureTextEntry }: InputProps) {
-  return (
-    <TextInput
-      style={styles.input}
-      placeholder={placeholder}
-      secureTextEntry={secureTextEntry}
-    />
-  );
+export default function Input({ style, ...props }: InputProps) {
+  return <TextInput {...props} style={[styles.input, style]} />;
 }
 
 const styles = StyleSheet.create({

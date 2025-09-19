@@ -1,29 +1,41 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import React from "react";
+import { Pressable, Text, StyleSheet, ActivityIndicator, PressableProps } from "react-native";
 
-type ButtonProps = {
+type Props = {
   title: string;
-  onPress: () => void;
-};
+  onPress: () => void | Promise<void>;
+  disabled?: boolean;
+  loading?: boolean;
+} & Omit<PressableProps, "onPress">;
 
-export default function Button({ title, onPress }: ButtonProps) {
+export default function Button({ title, onPress, disabled, loading, style, ...rest }: Props) {
+  const isDisabled = disabled || loading;
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
+    <Pressable
+      onPress={onPress}
+      disabled={isDisabled}
+      style={({ pressed }) => [
+        styles.btn,
+        isDisabled && styles.disabled,
+        pressed && !isDisabled && styles.pressed,
+        style as any,
+      ]}
+      {...rest}
+    >
+      {loading ? <ActivityIndicator /> : <Text style={styles.text}>{title}</Text>}
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "#007bff",
-    padding: 12,
+  btn: {
+    backgroundColor: "#0a84ff",
+    paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
-    marginVertical: 8,
+    marginTop: 4,
   },
-  text: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
+  pressed: { opacity: 0.85 },
+  disabled: { backgroundColor: "#9ec8ff" },
+  text: { color: "#fff", fontWeight: "600" },
 });
