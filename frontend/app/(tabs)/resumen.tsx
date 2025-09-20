@@ -1,17 +1,32 @@
+// app/(tabs)/resumen.tsx
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import { useAppTheme } from "../../theme"; //Todo lo que tenga theme. extrae el css de theme/indextsx
+import { StatsCards } from "../../components/resumen/StatsCards";
+import { ProgressBar } from "../../components/resumen/ProgressBar";
+import { Filters } from "../../components/resumen/Filters";
+import { TaskListPreview } from "../../components/resumen/TaskListPreview";
 
 export default function ResumenScreen() {
+  const theme = useAppTheme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Resumen</Text>
-      <Text style={styles.subtitle}>Aquí va tu tablero de tareas (stats, filtros, lista).</Text>
-    </View>
+    //SafeAreaView es un contenedor especial de react el cual asegura que el contenido de la app no 
+    //se esconda en bajo la camara o la barra superior del celuco
+    <SafeAreaView style={{ flex: 1/**Ocupa toda la pantalla */, backgroundColor: theme.colors.background }}>        
+      
+      <ScrollView
+        contentContainerStyle={{
+          padding: theme.layout.screenPadding,
+          gap: theme.layout.sectionGap,
+        }}
+      >
+        <ProgressBar />
+        <StatsCards />
+        <Filters />
+        <TaskListPreview />
+      </ScrollView>
+    </SafeAreaView>
+    //ScrollView permite un scroll por si se alarga la pantalla ^^
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16, justifyContent: "center" },
-  title: { fontSize: 24, fontWeight: "800", textAlign: "center", marginBottom: 8 },
-  subtitle: { fontSize: 14, color: "#666", textAlign: "center" },
-});
