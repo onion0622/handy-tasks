@@ -6,6 +6,7 @@ import Input from "@/components/ui/Input";
 import { Link } from "expo-router";
 import { AuthAPI } from "@/app/lib/api";
 import PasswordInput from "@/components/ui/PasswordInput";
+import Button from "@/components/ui/Button";
 
 
 export default function Register() {
@@ -40,6 +41,8 @@ export default function Register() {
       <Input placeholder="Nombre" value={nombre} onChangeText={setNombre} />
       <Input placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" />
       <PasswordInput placeholder="Contraseña" value={pwd} onChangeText={setPwd} secureTextEntry/>
+
+      <Button title={loading ? "Creando..." : "Registrarse"} onPress={onSubmit} disabled={loading} />
 
       <Link href="/auth/login" style={authStyles.link}>
         ¿Ya tienes cuenta? Inicia sesión
