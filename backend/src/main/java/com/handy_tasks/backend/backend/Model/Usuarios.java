@@ -32,7 +32,7 @@ public class Usuarios {
     @JsonProperty(access = Access.WRITE_ONLY)
     private String contraseña;
     private LocalDateTime fecha_creacion;
-    @OneToMany
+    @OneToMany(mappedBy = "usuario")
     private List<Tareas> tarea;
     
 }

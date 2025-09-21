@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.handy_tasks.backend.backend.Model.Tareas;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoTareas;
@@ -21,26 +22,20 @@ public class TareasServiceImp implements TareasService{
     private RepoTareas repoTareas;
 
     @Override
-    public List<Tareas> obtenerTareasPorUser(Integer iduser) {
+    public List<Tareas> findByUser(Integer iduser) {
+        return repoTareas.findByUsuario_Iduser(iduser);
+    }
 
-        Usuarios usuario = repousuarios.findById(iduser)
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
+    @Override
+    public List<Tareas> findByUsuarioCompletada(Integer iduser) {
+        return repoTareas.findByUsuario_IduserAndCompletadaTrue(iduser);
+    }
 
-        return usuario.getTarea();
+    @Override
+    public List<Tareas> findByUsuarioPendiente(Integer iduser) {
+        return repoTareas.findByUsuario_IduserAndCompletadaFalse(iduser);
+    }
 
-    }
-    @Override
-    public List<Tareas> obtenerTodas() {
-        return repoTareas.findAll();  
-    }
-    @Override
-    public List<Tareas> obtenerTareasCompletadas() {
-        return repoTareas.findByCompletada(true);
-    }
-    @Override
-    public List<Tareas> obtenerTareasPendientes() {
-        return repoTareas.findByCompletada(false);
-    }
     @Override
     public Tareas crearTareas(Integer iduser, Tareas tarea) {
         
@@ -53,6 +48,7 @@ public class TareasServiceImp implements TareasService{
         return repotareas.save(tarea);
         
     }
+
     @Override
     public Tareas actualizarTareas(Integer iduser, Integer idtarea, Tareas tarea) {
 
