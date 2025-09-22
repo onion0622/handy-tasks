@@ -5,7 +5,7 @@ import { authStyles } from "@/components/authForm/AuthForm.styles";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Link, router } from "expo-router";
-import { AuthAPI } from "@/app/lib/api";
+import { AuthAPI } from "@/app/services/auth.api";
 import PasswordInput from "@/components/ui/PasswordInput";
 
 

@@ -4,7 +4,7 @@ import { View, Text, Alert, Keyboard } from "react-native";
 import { authStyles } from "@/components/authForm/AuthForm.styles";
 import Input from "@/components/ui/Input";
 import { Link } from "expo-router";
-import { AuthAPI } from "@/app/lib/api";
+import { AuthAPI } from "@/app/services/auth.api";
 import PasswordInput from "@/components/ui/PasswordInput";
 import Button from "@/components/ui/Button";
 
