@@ -21,8 +21,8 @@ export default function ResumenScreen() {
           gap: theme.layout.sectionGap,
         }}
       >
-        <ProgressBar />
         <StatsCards />
+        <ProgressBar />
         <Filters />
         <TaskListPreview />
       </ScrollView>
