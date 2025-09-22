@@ -4,6 +4,7 @@ package com.handy_tasks.backend.backend.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.handy_tasks.backend.backend.Data.AuthResponse;
 import com.handy_tasks.backend.backend.Data.LoginRequest;
 import com.handy_tasks.backend.backend.Data.RegisterRequest;
 import com.handy_tasks.backend.backend.Model.Usuarios;
@@ -26,11 +27,11 @@ public class AuthController{
     private AuthService authservice;
 
     @PostMapping("/register")
-    public ResponseEntity<Usuarios> register(@Valid @RequestBody RegisterRequest request){
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request){
           
-        Usuarios user =  authservice.register(request);
+        AuthResponse response =  authservice.register(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
     

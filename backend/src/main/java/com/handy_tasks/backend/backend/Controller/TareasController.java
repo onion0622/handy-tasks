@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.handy_tasks.backend.backend.Model.Tareas;
 import com.handy_tasks.backend.backend.Services.TareasService;
-
+/* 
 @RestController
 @RequestMapping("/api/tareas")
 public class TareasController {
@@ -34,3 +34,4 @@ public class TareasController {
     
    
 }
+*/

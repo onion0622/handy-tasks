@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.handy_tasks.backend.backend.Data.AuthResponse;
 import com.handy_tasks.backend.backend.Data.LoginRequest;
 import com.handy_tasks.backend.backend.Data.RegisterRequest;
 import com.handy_tasks.backend.backend.Err.DuplicateResourceException;
@@ -32,7 +33,7 @@ public class AuthService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public Usuarios register(RegisterRequest request){
+    public AuthResponse register(RegisterRequest request){
 
         if(repouser.existsByEmail(request.getEmail())){
             throw new DuplicateResourceException("El email ya esta registrado");
@@ -46,7 +47,11 @@ public class AuthService {
         user.setRol(Rol.USER);
         user.setFecha_creacion(LocalDateTime.now());
 
-        return repouser.save(user);
+        String token = jwtservice.generateToken(request.getEmail());
+
+        repouser.save(user);
+
+        return new AuthResponse(token);
 
     }
 
