@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import { Link, router } from "expo-router";
 import { AuthAPI } from "@/app/services/auth.api";
 import PasswordInput from "@/components/ui/PasswordInput";
-
+import { Token } from "../lib/token"; // Llamamos el import del token para manejarlo a partir de ahora.
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,15 +19,16 @@ export default function Login() {
     setLoading(true);
     try {
       const { token } = await AuthAPI.login({ email, "contraseña": pwd });
-      console.log("Login OK =>", token);
+      await Token.set(token); //Ahora la rutina va esperar por el token, y le va asignar el valor que obtenga. 
+      //console.log("JWT guardado =>", (await Token.get())?.slice(0, 20) + "..."); Log para probar si se guarda el token.
       router.replace("/(tabs)/tareas"); // ir a la vista principal
     } catch (e: any) {
       Alert.alert("Inicio de sesión fallido", e?.message || "Credenciales inválidas");
     } finally {
       setEmail("");
       setPwd("");
-      Keyboard.dismiss();
-      setLoading(false);
+      Keyboard.dismiss();   //reset de los campos del login por seguridad
+      setLoading(false);    //baja el teclado
     }
   };
 
