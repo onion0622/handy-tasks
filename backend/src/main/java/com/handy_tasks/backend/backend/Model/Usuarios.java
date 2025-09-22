@@ -1,10 +1,10 @@
 package com.handy_tasks.backend.backend.Model;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,7 +32,7 @@ public class Usuarios {
     @JsonProperty(access = Access.WRITE_ONLY)
     private String contraseña;
     private LocalDateTime fecha_creacion;
-    @OneToMany(mappedBy = "usuario")
-    private List<Tareas> tarea;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tareas> tareas;
     
 }
