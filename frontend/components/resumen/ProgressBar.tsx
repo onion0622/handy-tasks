@@ -22,12 +22,12 @@ export const ProgressBar: React.FC = () => {
   // color dinámico y mensaje por % (verde/amarillo/rojo)
   const { barColor, helperText } = useMemo(() => {
     if (progressPercent >= 70) {
-      return { barColor: theme.colors.success, helperText: "Opa champion, the GOAT" };
+      return { barColor: theme.colors.success, helperText: "Opa champion, sos Ivan?" };
     }
     if (progressPercent >= 40) {
       return { barColor: theme.colors.warning, helperText: "Buen ritmo, sigue así" };
     }
-    return { barColor: "#EF4444", helperText: "Sos Daza?" }; // rojo
+    return { barColor: "#EF4444", helperText: "Sos Daza?" }; 
   }, [progressPercent, theme.colors.success, theme.colors.warning]);
 
   // reanimar cada vez que la pantalla gana foco
