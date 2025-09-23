@@ -1,6 +1,9 @@
 // app/store/tasks.ts
 import React, { createContext, useContext, useMemo, useState } from "react";
 
+// tipo para el filtro de tareas completadas, pendientes , totales
+export type StatusFilter = "all" | "done" | "pending";
+
 /** Define la tarea --> task */
 export type Task = {
   id: string;
@@ -55,10 +58,14 @@ const mockTasks: Task[] = [
 ];
 
 /** Contexto */
+
+
 type TasksContextValue = {
   tasks: Task[];
   filter: TaskFilter;
   setFilter: (f: TaskFilter) => void;
+  status: StatusFilter;
+  setStatus: (s:StatusFilter) => void;
   // métricas
   total: number;
   completadas: number;
@@ -73,6 +80,7 @@ const TasksContext = createContext<TasksContextValue | null>(null);
 export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [tasks] = useState<Task[]>(mockTasks);
   const [filter, setFilter] = useState<TaskFilter>("todos");
+  const [status, setStatus] = useState<StatusFilter>("all");
 
   // Parte para la barra de tareas
   const { total, completadas, pendientes, progressPercent, listByFilter } = useMemo(() => {
@@ -80,10 +88,14 @@ export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) =
     const completadas = tasks.filter(t => t.done).length;
     const pendientes = total - completadas;
     const progressPercent = total === 0 ? 0 : Math.round((completadas / total) * 100);
-
+    // aplica filtro por fecha
     let listByFilter: Task[] = tasks;
     if (filter === "hoy") listByFilter = tasks.filter(t => isToday(t.dueAt));
     if (filter === "semana") listByFilter = tasks.filter(t => isThisWeek(t.dueAt));
+
+    //aplica filtro por estado
+    if (status === "done") listByFilter = listByFilter.filter(t => t.done);
+    if (status === "pending") listByFilter = listByFilter.filter(t => !t.done);
 
     // Orden: primero pendientes por fecha más cercana, luego completadas al final
     listByFilter = [...listByFilter].sort((a, b) => {
@@ -92,12 +104,14 @@ export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) =
     });
 
     return { total, completadas, pendientes, progressPercent, listByFilter };
-  }, [tasks, filter]);
+  }, [tasks, filter,status]);
 
   const value: TasksContextValue = {
     tasks,
     filter,
     setFilter,
+    status,
+    setStatus,
     total,
     completadas,
     pendientes,

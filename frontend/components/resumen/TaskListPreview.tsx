@@ -38,7 +38,6 @@ export const TaskListPreview: React.FC = () => {
             fontWeight: "600",
           }}
         >
-          Ver todas →
         </Text>
       </Pressable>
 
