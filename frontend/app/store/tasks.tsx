@@ -40,13 +40,13 @@ const isThisWeek = (iso: string) => {
 /** Semillas mock para definir las tareas */
 const today = startOfDay();
 const mockTasks: Task[] = [
-  { id: "1", titulo: "Diseñar tarjetas de KPIs", done: true, dueAt: toISO(addDays(today, -1)), prioridad: "media" },
+  { id: "1", titulo: "Diseñar tarjetas de KPIs", done: false, dueAt: toISO(addDays(today, -1)), prioridad: "media" },
   { id: "2", titulo: "Implementar ProgressBar", done: false, dueAt: toISO(addDays(today, 0)), prioridad: "alta" },
   { id: "3", titulo: "Crear filtros (Todos/Hoy/Semana)", done: false, dueAt: toISO(addDays(today, 1)), prioridad: "alta" },
-  { id: "4", titulo: "TaskItem con badge de estado", done: true, dueAt: toISO(addDays(today, -2)), prioridad: "baja" },
+  { id: "4", titulo: "TaskItem con badge de estado", done: false, dueAt: toISO(addDays(today, -2)), prioridad: "baja" },
   { id: "5", titulo: "Lista previa de tareas (3–5)", done: false, dueAt: toISO(addDays(today, 3)), prioridad: "media" },
   { id: "6", titulo: "Estado Empty y Loading", done: false, dueAt: toISO(addDays(today, 2)), prioridad: "media" },
-  { id: "7", titulo: "Pulir dark/light theme", done: true, dueAt: toISO(addDays(today, -3)), prioridad: "baja" },
+  { id: "7", titulo: "Pulir dark/light theme", done: false, dueAt: toISO(addDays(today, -3)), prioridad: "baja" },
   { id: "8", titulo: "Accesibilidad básica (labels)", done: false, dueAt: toISO(addDays(today, 4)), prioridad: "baja" },
   { id: "9", titulo: "Animaciones suaves en montaje", done: true, dueAt: toISO(addDays(today, -4)), prioridad: "media" },
   { id: "10", titulo: "Ver todas → navegación", done: false, dueAt: toISO(addDays(today, 5)), prioridad: "baja" },

@@ -1,14 +1,18 @@
 // componente para el conjunto de las tareas en su pre vista
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useAppTheme } from "../../theme";
 import { useTasks } from "../../app/store/tasks";
 import { TaskItem } from "./TaskItem";
 import { Empty } from "../ui/Empty";
+import { TaskDetailsModal } from "./TaskDetailsModal";
+import type { Task } from "../../app/store/tasks";
+
 
 export const TaskListPreview: React.FC = () => {
   const theme = useAppTheme();
   const { listByFilter } = useTasks();
+  const [selected, setSelected] = useState<Task | null>(null);
 
   const preview = listByFilter.slice(0, 5);
 
@@ -17,7 +21,7 @@ export const TaskListPreview: React.FC = () => {
       {preview.length === 0 ? (
         <Empty message="No hay tareas para este filtro" />
       ) : (
-        preview.map(t => <TaskItem key={t.id} task={t} />)
+        preview.map(t => <TaskItem key={t.id} task={t} onPress={() => setSelected(t)} />)
       )}
 
       <Pressable
@@ -37,6 +41,9 @@ export const TaskListPreview: React.FC = () => {
           Ver todas →
         </Text>
       </Pressable>
+
+      {/* Modal de detalle */}
+      <TaskDetailsModal visible={!!selected} task={selected} onClose={() => setSelected(null)} />
     </View>
   );
 };
