@@ -21,6 +21,6 @@ public class RegisterRequest {
 
     @NotBlank
     @Size(min=6, max=72)
-    private String contraseña;
+    private String password;
     
 }

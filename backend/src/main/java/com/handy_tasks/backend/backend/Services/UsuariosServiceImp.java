@@ -43,7 +43,7 @@ public class UsuariosServiceImp implements UsuariosService{
        return repousuarios.findById(id).map(usuarioActualizado -> {
         usuarioActualizado.setNombre(usuario.getNombre());
         usuarioActualizado.setEmail(usuario.getEmail());
-        usuarioActualizado.setContraseña(usuario.getContraseña());
+        usuarioActualizado.setPassword(usuario.getPassword());
         return repousuarios.save(usuarioActualizado); 
     });
         /*Usuarios usuarioactualizado = repousuarios.findById(id)

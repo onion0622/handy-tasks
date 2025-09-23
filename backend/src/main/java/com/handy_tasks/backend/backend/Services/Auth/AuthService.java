@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,7 +44,7 @@ public class AuthService {
 
         user.setNombre(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setContraseña(encoder.encode(request.getContraseña()));
+        user.setPassword(encoder.encode(request.getPassword()));
         user.setRol(Rol.USER);
         user.setFecha_creacion(LocalDateTime.now());
 
@@ -55,17 +56,17 @@ public class AuthService {
 
     }
 
-    public String verify(LoginRequest lrequest) {
+    public AuthResponse verify(LoginRequest lrequest) {
         
         Authentication auth = authmanager
-        .authenticate(new UsernamePasswordAuthenticationToken(lrequest.getEmail(), lrequest.getContraseña()));
+        .authenticate(new UsernamePasswordAuthenticationToken(lrequest.getEmail(), lrequest.getPassword()));
 
         if(auth.isAuthenticated()){
 
-            return jwtservice.generateToken(lrequest.getEmail());
+            return new AuthResponse(jwtservice.generateToken(lrequest.getEmail()));
         }else 
         
-                return "fail";
+                throw new BadCredentialsException("Invalido...");
     }
     
 

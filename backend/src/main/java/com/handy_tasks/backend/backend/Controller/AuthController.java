@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.handy_tasks.backend.backend.Data.AuthResponse;
 import com.handy_tasks.backend.backend.Data.LoginRequest;
 import com.handy_tasks.backend.backend.Data.RegisterRequest;
-import com.handy_tasks.backend.backend.Model.Usuarios;
+//import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Services.Auth.AuthService;
 
 import jakarta.validation.Valid;
@@ -36,9 +36,9 @@ public class AuthController{
     }
     
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest lrequest){
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest lrequest){
 
-        return authservice.verify(lrequest);
+        return ResponseEntity.ok(authservice.verify(lrequest));
 
     }
     

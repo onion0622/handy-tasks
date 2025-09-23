@@ -30,7 +30,7 @@ public class Usuarios {
     @Column(unique = true, nullable = false)
     private String email;
     @JsonProperty(access = Access.WRITE_ONLY)
-    private String contraseña;
+    private String password;
     private LocalDateTime fecha_creacion;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tareas> tareas;

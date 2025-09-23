@@ -20,7 +20,7 @@ export default function Register() {
     if (!username || !email || !pwd) return Alert.alert("Faltan datos");
     setLoading(true);
     try {
-      const {token} = await AuthAPI.register({ username, email, "contraseña": pwd });
+      const {token} = await AuthAPI.register({ username, email, password: pwd });
       await Token.set(token);
       //console.log("JWT guardado =>", (await Token.get())?.slice(0, 20) + "..."); Log para probar si se guarda el token.
       router.replace({ pathname: "/(tabs)/tareas", params: { justRegistered: "1" } });  // Ahora el register hace auto-loggin la primera vez.

@@ -30,7 +30,7 @@ public class UserPrincipal implements UserDetails{
     @Override
     public String getPassword() {
         // TODO Auto-generated method stub
-        return user.getContraseña();
+        return user.getPassword();
     }
 
     @Override
