@@ -3,12 +3,24 @@
 import { Tabs } from "expo-router";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import { TasksProvider } from "../store/tasks"; // Estos son los mocks para las pruebas
 
 export default function TabsLayout() {
   return (
     <TasksProvider>
-      <Tabs screenOptions={{ headerTitleAlign: "center" }}>
+      <Tabs screenOptions={{ 
+        headerTitleAlign: "center",
+        headerTransparent: true,
+        headerStyle: { 
+        backgroundColor: "rgba(0, 0, 0, 0.3)" 
+        },
+        headerTitleStyle: { color: "#f5a7a7ff", fontWeight: "600" }, // título del header en blanco
+        headerTintColor: "#fff",                                 // íconos del header en blanco
+        tabBarActiveTintColor: "#f0a0a0ff",   // ← cuando el tab está activo
+        tabBarInactiveTintColor: "#e9442eff", // ← cuando está inactivo
+        tabBarStyle: { backgroundColor: "#111" }, // fondo de la barra
+        }}>
         <Tabs.Screen
           //Aqui hace la conexion del tab con cada una de los archivos
           name="tareas"

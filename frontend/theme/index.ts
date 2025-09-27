@@ -60,7 +60,7 @@ const light: Theme = {
     text: "#0B0B0C",
     textMuted: "#6B7280",
     border: "#E5E7EB",
-    primary: "#0A84FF",
+    primary: "#ff2b2bff",
     success: "#22C55E",
     warning: "#F59E0B",
     kpiPositive: "#22C55E",
