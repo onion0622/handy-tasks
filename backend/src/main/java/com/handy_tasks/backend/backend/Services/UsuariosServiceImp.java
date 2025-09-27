@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.handy_tasks.backend.backend.Data.CurrentUserInfo;
 import com.handy_tasks.backend.backend.Model.Rol;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
@@ -15,6 +19,32 @@ public class UsuariosServiceImp implements UsuariosService{
 
     @Autowired
     private RepoUsuarios repousuarios;
+
+    private String currentUserEmail(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return auth.getName();
+
+    }
+
+    private Usuarios currentUser(){
+
+        String email = currentUserEmail();
+
+        Usuarios user = repousuarios.findByEmail(email)
+                                    .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado..."));
+
+        return user;
+    }
+
+    @Override
+    public CurrentUserInfo findMyInfo(){
+
+        Usuarios user = currentUser();    
+
+        return new CurrentUserInfo(user.getNombre(), user.getEmail(), user.getFecha_creacion());
+    }
 
     @Override
     public List<Usuarios> findAllUsuarios() {

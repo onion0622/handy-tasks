@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.handy_tasks.backend.backend.Data.CurrentUserInfo;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Services.UsuariosService;
 
@@ -26,6 +27,13 @@ public class UsuariosController {
     private UsuariosService usuarioservice;
 
     @GetMapping
+    public ResponseEntity<CurrentUserInfo> getCurrentUser(){
+
+        return ResponseEntity.ok(usuarioservice.findMyInfo());
+
+    }
+
+    @GetMapping("/todos")
     public ResponseEntity<List<Usuarios>> getUsuarios(){
 
         return ResponseEntity.ok(usuarioservice.findAllUsuarios());
