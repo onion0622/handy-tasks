@@ -14,3 +14,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
         boolean existsByEmail(String email);
         
     }
+    

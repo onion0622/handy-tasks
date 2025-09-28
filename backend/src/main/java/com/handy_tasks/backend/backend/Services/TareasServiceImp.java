@@ -11,6 +11,7 @@ import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoTareas;
 import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
 
+
 @Service
 public class TareasServiceImp implements TareasService{
 
@@ -18,26 +19,31 @@ public class TareasServiceImp implements TareasService{
     private RepoTareas repotareas;
     @Autowired
     private RepoUsuarios repousuarios;
+    
     @Autowired
-    private RepoTareas repoTareas;
-
+    private UsuariosServiceImp usuariosService;
     
     @Override
-    public List<Tareas> findByUser(Integer iduser) {
-        return repoTareas.findByUsuario_Iduser(iduser);
-    }
+public List<Tareas> findByUser() {
+    Usuarios usuario = usuariosService.currentUser(); 
+    return usuario.getTareas();
+}
 
-    @Override
-    public List<Tareas> findByUsuarioCompletada(Integer iduser) {
-        return repoTareas.findByUsuario_IduserAndCompletadaTrue(iduser);
-    }
+@Override
+public List<Tareas> findByUsuarioCompletada() {
+    Usuarios usuario = usuariosService.currentUser();
+    return usuario.getTareas().stream()
+                  .filter(Tareas::isCompletada)
+                  .toList();
+}
 
-    @Override
-    public List<Tareas> findByUsuarioPendiente(Integer iduser) {
-        return repoTareas.findByUsuario_IduserAndCompletadaFalse(iduser);
-    }
-
-
+@Override
+public List<Tareas> findByUsuarioPendiente() {
+    Usuarios usuario = usuariosService.currentUser();
+    return usuario.getTareas().stream()
+                  .filter(t -> !t.isCompletada())
+                  .toList();
+}
    
     @Override
     public Tareas crearTareas(Integer iduser, Tareas tarea) {

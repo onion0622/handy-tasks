@@ -28,7 +28,7 @@ public class UsuariosServiceImp implements UsuariosService{
 
     }
 
-    private Usuarios currentUser(){
+    public Usuarios currentUser(){
 
         String email = currentUserEmail();
 

@@ -7,8 +7,8 @@ public interface TareasService {
 
     public Tareas crearTareas(Integer iduser, Tareas tarea);
     
-    public List<Tareas> findByUser(Integer iduser);
-    public List<Tareas> findByUsuarioCompletada(Integer iduser);
-    public List<Tareas> findByUsuarioPendiente(Integer iduser);
+    public List<Tareas> findByUser();
+    public List<Tareas> findByUsuarioCompletada();
+    public List<Tareas> findByUsuarioPendiente();
 
 }   
