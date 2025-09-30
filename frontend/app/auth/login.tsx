@@ -8,6 +8,7 @@ import { Link, router } from "expo-router";
 import { AuthAPI } from "@/app/services/auth.api";
 import PasswordInput from "@/components/ui/PasswordInput";
 import { Token } from "../lib/token"; // Llamamos el import del token para manejarlo a partir de ahora.
+import FormScreen from "@/components/layout/FormScreen";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,13 +28,21 @@ export default function Login() {
     } finally {
       setEmail("");
       setPwd("");
-      Keyboard.dismiss();   //reset de los campos del login por seguridad
       setLoading(false);    //baja el teclado
     }
   };
 
-  return (
-    <View style={authStyles.container}>
+return (
+  <FormScreen
+    footer={
+      <Button
+        title={loading ? "Ingresando..." : "Entrar"}
+        onPress={onSubmit}
+        disabled={loading}
+      />
+    }
+  >
+    <View style={[authStyles.container, { justifyContent: "center", minHeight: 260 }]}>
       <Text style={authStyles.title}>Iniciar Sesión</Text>
 
       <Input
@@ -48,17 +57,14 @@ export default function Login() {
         value={pwd}
         onChangeText={setPwd}
         secureTextEntry
-      />
-
-      <Button
-        title={loading ? "Ingresando..." : "Entrar"}
-        onPress={onSubmit}
-        disabled={loading}
+        validate={false}
       />
 
       <Link href="/auth/register" style={authStyles.link}>
         ¿No tienes cuenta? Regístrate
       </Link>
     </View>
+  </FormScreen>
   );
+
 }
