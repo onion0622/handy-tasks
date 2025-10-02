@@ -27,7 +27,7 @@ export const ProgressBar: React.FC = () => {
     if (progressPercent >= 40) {
       return { barColor: theme.colors.warning, helperText: "Buen ritmo, sigue así" };
     }
-    return { barColor: "#EF4444", helperText: "Sos Daza?" }; 
+    return { barColor: "#EF4444", helperText: "Esfuerzate mas, tu puedes!!!" }; 
   }, [progressPercent, theme.colors.success, theme.colors.warning]);
 
   // reanimar cada vez que la pantalla gana foco
