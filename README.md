@@ -70,7 +70,7 @@ Handy Tasks es una aplicación móvil que permite a los usuarios **registrarse, 
 ## Petición Http Post para crear tarea
 ![](assets/backendposttarea.jpg)
 ## Petición Http get para mirar las tareas completadas
-![](assets/backendgettareac.jpg)
+![](assets/backendgettareasc.jpg)
 
 
 
