@@ -53,24 +53,19 @@ Handy Tasks es una aplicación móvil que permite a los usuarios **registrarse, 
 
 ---
 
-## 📸 Screenshots  
+## 📸 Screenshots - Backend
 
-## Backend en funcionamiento
-![Backend en funcionamiento](assets/backendrun.png)
-## Register
-![](assets/backendregister.jpg)
-## Token JWT
-![](assets/backendtoken.jpg)
-## Login
-![](assets/backendlogin.jpg)
-## Petición Http Get
-![Petición Http Get](assets/backendget.png)
-## Petición Http Get Todos
-![](assets/backendgettodos.jpg)
-## Petición Http Post para crear tarea
-![](assets/backendposttarea.jpg)
-## Petición Http get para mirar las tareas completadas
-![](assets/backendgettareasc.jpg)
+| Backend en funcionamiento | Register | Token JWT |
+|---------------------------|----------|-----------|
+| ![Backend en funcionamiento](./assets/backendrun.png) | ![Register](./assets/backendregister.jpg) | ![Token JWT](./assets/backendtoken.jpg) |
+
+| Login | Petición Http Get | Petición Http Get Todos |
+|-------|-------------------|-------------------------|
+| ![Login](./assets/backendlogin.jpg) | ![Petición Http Get](./assets/backendget.png) | ![Get Todos](./assets/backendgettodos.jpg) |
+
+| Petición Http Post (crear tarea) | Petición Http Get (tareas completadas) |
+|----------------------------------|----------------------------------------|
+| ![Post tarea](./assets/backendposttarea.jpg) | ![Get Completadas](./assets/backendgettareasc.jpg) |
 
 
 
