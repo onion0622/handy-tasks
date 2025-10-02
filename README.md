@@ -58,7 +58,7 @@ Coloca tus capturas de pantalla en la carpeta `assets/` y referéncialas aquí:
 
 ```markdown
 
-![Backend en funcionamiento](../handy-tasks/Assets/backendrun.png)
-![Petición Http Get](Assets/backendget.png)
+![Backend en funcionamiento](../handy-tasks/assets/backendrun.png)
+![Petición Http Get](assets/backendget.png)
 
 
