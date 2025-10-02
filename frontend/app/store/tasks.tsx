@@ -82,6 +82,8 @@ type TasksContextValue = {
   // datos derivados
   listByFilter: Task[];
   addTask: (t: NewTaskInput) => void;
+  toggleDone: (id: string) => void;
+  deleteTask: (id: string) => void;
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
@@ -101,6 +103,17 @@ export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) =
   };
   setTasks(prev => [nueva, ...prev]);
 };
+
+const toggleDone = (id: string) => {
+  setTasks(prev =>
+    prev.map(t => (t.id === id ? { ...t, done: !t.done } : t))
+  );
+};
+const deleteTask = (id: string) => {
+  setTasks(prev => prev.filter(t => t.id !== id));
+};
+
+
 
   // Parte para la barra de tareas
   const { total, completadas, pendientes, progressPercent, listByFilter } = useMemo(() => {
@@ -137,7 +150,9 @@ export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) =
     pendientes,
     progressPercent,
     listByFilter,
-    addTask
+    addTask,
+    toggleDone,
+    deleteTask
   };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;

@@ -4,7 +4,9 @@ import { SafeAreaView,ScrollView, View, Text, Modal, Pressable, TextInput } from
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useAppTheme } from "../../theme";
 import { FAB } from "../../components/ui/FAB";
+import { Ionicons } from "@expo/vector-icons";
 import { useTasks } from "../store/tasks"; // Aquí traemos el contexto (donde está addTask)
+import { TaskFormModal } from "../../components/tareas/TaskFormModal"; // Formulario en modal
 
 export default function TareasScreen() {
   const theme = useAppTheme(); // Tema global (colores, tipografía, etc.)
@@ -16,7 +18,7 @@ export default function TareasScreen() {
   const [dueAt, setDueAt] = useState(""); // fecha de vencimiento
   const [prioridad, setPrioridad] = useState<"alta" | "media" | "baja">("media"); // prioridad seleccionada
 
-  const { addTask,listByFilter } = useTasks(); // función que viene del store, agrega una tarea
+  const { addTask,listByFilter,toggleDone,deleteTask } = useTasks(); // función que viene del store, agrega una tarea
 
   // Función que se ejecuta al darle "guardar"
   const handleSave = () => {
@@ -47,9 +49,9 @@ export default function TareasScreen() {
           //alignItems: "center",   // centra horizontal
           //justifyContent: "center", // centra vertical
         }}
-      >
+      > 
         <Text style={{ ...theme.typography.subtitle, color: theme.colors.textMuted }}>
-          -- Lista de tareas --
+          {/* Muestra la cantidad de tareas que hay según el filtro actual */}
         </Text>
         
       {listByFilter.length === 0 ? (
@@ -71,15 +73,32 @@ export default function TareasScreen() {
                 backgroundColor: theme.colors.cardBg,
               }}
             >
-              {/* Título de la tarea */}
-              <Text style={{ ...theme.typography.body, color: theme.colors.text, fontWeight: "600" }}>
+            {/* Fila superior: botón de estado + título */}
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <Pressable
+                onPress={() => toggleDone(task.id)}
+                accessibilityRole="button"
+                accessibilityLabel={task.done ? "Marcar como pendiente" : "Marcar como completada"}
+                android_ripple={{ color: theme.colors.surfaceMuted }}
+                style={{ padding: 4 }}
+              >
+                <Ionicons
+                  name={task.done ? "checkmark-circle" : "ellipse-outline"}
+                  size={22}
+                  color={task.done ? theme.colors.kpiPositive : theme.colors.textMuted}
+                />
+              </Pressable>
+
+              <Text style={{ ...theme.typography.body, color: theme.colors.text, fontWeight: "600", flex: 1 }}>
                 {task.titulo}
               </Text>
 
-              {/* Línea secundaria con fecha y prioridad */}
-              <Text style={{ ...theme.typography.labelSm, color: theme.colors.textMuted }}>
-                Vence: {new Date(task.dueAt).toLocaleDateString()} | Prioridad: {task.prioridad}
-              </Text>
+              {/* Botón eliminar */}
+              <Pressable onPress={() => deleteTask(task.id)} style={{ padding: 4 }}>
+                <Ionicons name="trash" size={20} color={theme.colors.kpiPending} />
+              </Pressable>
+              
+              </View>
 
               {/* Estado: completada o pendiente */}
               <Text
@@ -106,113 +125,15 @@ export default function TareasScreen() {
         }}
       />
 
-      {/* Modal que aparece encima con el formulario */}
-      <Modal transparent visible={open} animationType="fade" onRequestClose={() => setOpen(false)}>
-        {/* Fondo oscuro para que se vea "modal" */}
-        <Pressable
-          onPress={() => setOpen(false)} // si haces tap fuera del formulario, se cierra
-          style={{
-            flex: 1,
-            backgroundColor: "rgba(0,0,0,0.4)",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: theme.layout.screenPadding,
-          }} 
-        >
-
-          {/* Caja blanca del formulario */}
-          <Pressable
-            onPress={() => {}} // evita que el modal se cierre si presionas dentro
-            style={{
-              width: "100%",
-              borderRadius: theme.radii.lg,
-              backgroundColor: theme.colors.cardBg,
-              borderWidth: 1,
-              borderColor: theme.colors.cardBorder,
-              padding: theme.layout.cardPadding,
-            }}
-          >
-            <Text style={{ ...theme.typography.titleLg, color: theme.colors.text, marginBottom: 16 }}>
-              Nueva tarea
-            </Text>
-
-            {/* Input de título */}
-            <TextInput
-              placeholder="Título de la tarea"
-              value={titulo}
-              onChangeText={setTitulo}
-              style={{
-                borderWidth: 1,
-                borderColor: theme.colors.border,
-                borderRadius: theme.radii.md,
-                padding: 8,
-                marginBottom: 12,
-                color: theme.colors.text,
-              }}
-              placeholderTextColor={theme.colors.textMuted}
-            />
-
-            {/* Input de fecha */}
-            <TextInput
-              placeholder="Fecha (YYYY-MM-DD)"
-              value={dueAt}
-              onChangeText={setDueAt}
-              style={{
-                borderWidth: 1,
-                borderColor: theme.colors.border,
-                borderRadius: theme.radii.md,
-                padding: 8,
-                marginBottom: 12,
-                color: theme.colors.text,
-              }}
-              placeholderTextColor={theme.colors.textMuted}
-            />
-
-            {/* Botoncitos de prioridad */}
-            <View style={{ flexDirection: "row", gap: 8, marginBottom: 12 }}>
-              {["alta", "media", "baja"].map(p => (
-                <Pressable
-                  key={p}
-                  onPress={() => setPrioridad(p as "alta" | "media" | "baja")}
-                  style={{
-                    flex: 1,
-                    padding: 8,
-                    borderRadius: theme.radii.md,
-                    borderWidth: 1,
-                    borderColor: prioridad === p ? theme.colors.primary : theme.colors.border,
-                    backgroundColor: prioridad === p ? theme.colors.primary : theme.colors.surface,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: prioridad === p ? "#fff" : theme.colors.text,
-                    }}
-                  >
-                    {p}
-                  </Text>
-                </Pressable>
-              ))}
-            </View>
-
-            {/* Botón guardar */}
-            <Pressable
-              onPress={handleSave}
-              android_ripple={{ color: theme.colors.surfaceMuted }}
-              style={{
-                alignSelf: "flex-end",
-                marginTop: 8,
-                paddingVertical: 8,
-                paddingHorizontal: 16,
-                borderRadius: theme.radii.md,
-                backgroundColor: theme.colors.primary,
-              }}
-            >
-              <Text style={{ ...theme.typography.subtitle, color: "#fff" }}>Guardar</Text>
-            </Pressable>
-          </Pressable>
-        </Pressable>
-      </Modal>
+      {/* Usa el nuevo formulario modal */}
+      <TaskFormModal
+        visible={open}
+        onClose={() => setOpen(false)}
+        onSubmit={(data) => {
+          addTask(data);
+          setOpen(false);
+        }}
+      />
     </SafeAreaView>
   );
 }
