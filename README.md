@@ -66,10 +66,17 @@ Handy Tasks es una aplicación móvil que permite a los usuarios **registrarse, 
 | Petición Http Post (crear tarea) | Petición Http Get (tareas completadas) |
 |----------------------------------|----------------------------------------|
 
+| Vista de registro | Vista de inicio de sesión |
+|-------------------|---------------------------|
 | ![Vista de registro](./assets/Vistaderegister.png) | ![Vista de inicio de sesion](./assets/Vistainiciodesesion.png) |
 
-| ![Tab de tareas](./assets/TabTareas.png) | ![Pop up de creacion de tarea](./assets/CrearTarea.png) |
-| ![Tab de resumen](./assets/Tabresumen.png) | ![Bar progress](./assets/Variaciodelabarprogress(resumen).png) |
+| Tab de tareas | Pop up de creación de tarea |
+|---------------|-----------------------------|
+| ![Tab de tareas](./assets/TabTareas.png) | ![Pop up de creación de tarea](./assets/CrearTarea.png) |
+
+| Tab de resumen | Bar progress (variación) |
+|----------------|---------------------------|
+| ![Tab de resumen](./assets/Tabresumen.png) | ![Bar progress](./assets/Variaciondelabarprogress(resumen).png) |
 
 
 
