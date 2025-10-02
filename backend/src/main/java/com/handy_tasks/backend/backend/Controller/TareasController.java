@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.handy_tasks.backend.backend.Model.Tareas;
 import com.handy_tasks.backend.backend.Services.TareasService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
  
 @RestController
 @RequestMapping("/api/tareas")
@@ -16,6 +19,8 @@ public class TareasController {
 
     @Autowired
     private TareasService tareasService;
+
+
 
     @GetMapping
     public List<Tareas> obtenerTodasPorUsuarioLogueado() {
@@ -31,4 +36,10 @@ public class TareasController {
     public List<Tareas> obtenerPendientesPorUsuarioLogueado() {
         return tareasService.findByUsuarioPendiente();
     }
+    @PostMapping
+    public Tareas postMethodName(@RequestBody Tareas tarea) {
+        
+        return tareasService.crearTareas(tarea);
+    }
+    
 }
