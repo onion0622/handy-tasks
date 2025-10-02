@@ -53,12 +53,24 @@ Handy Tasks es una aplicación móvil que permite a los usuarios **registrarse, 
 
 ---
 
-## 📸 Screenshots (ejemplo)
-Coloca tus capturas de pantalla en la carpeta `assets/` y referéncialas aquí:  
+## 📸 Screenshots  
 
-
-
+## Backend en funcionamiento
 ![Backend en funcionamiento](assets/backendrun.png)
+## Register
+![](assets/backendregister.jpg)
+## Token JWT
+![](assets/backendtoken.jpg)
+## Login
+![](assets/backendlogin.jpg)
+## Petición Http Get
 ![Petición Http Get](assets/backendget.png)
-![Hola](assets/hola.png)
+## Petición Http Get Todos
+![](assets/backendgettodos.jpg)
+## Petición Http Post para crear tarea
+![](assets/backendposttarea.jpg)
+## Petición Http get para mirar las tareas completadas
+![](assets/backendgettareac.jpg)
+
+
 
