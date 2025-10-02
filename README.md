@@ -58,6 +58,6 @@ Coloca tus capturas de pantalla en la carpeta `assets/` y referéncialas aquí:
 
 ```markdown
 ![Login](assets/login.png)
-![Backend en funcionamiento](Assets/backendrun.jpg)
+![Backend en funcionamiento](../handy-tasks/Assets/backendrun.jpg)
 
 
