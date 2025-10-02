@@ -3,6 +3,8 @@
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,9 +39,9 @@ public class TareasController {
         return tareasService.findByUsuarioPendiente();
     }
     @PostMapping
-    public Tareas postMethodName(@RequestBody Tareas tarea) {
+    public ResponseEntity<Tareas> crearTareas(@RequestBody Tareas tarea) {
         
-        return tareasService.crearTareas(tarea);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tareasService.crearTareas(tarea));
     }
     
 }

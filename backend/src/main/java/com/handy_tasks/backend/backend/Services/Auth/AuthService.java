@@ -50,9 +50,11 @@ public class AuthService {
 
         String token = jwtservice.generateToken(request.getEmail());
 
+        String refreshtoken = ""; 
+
         repouser.save(user);
 
-        return new AuthResponse(token);
+        return new AuthResponse(token, refreshtoken);
 
     }
 
@@ -61,9 +63,11 @@ public class AuthService {
         Authentication auth = authmanager
         .authenticate(new UsernamePasswordAuthenticationToken(lrequest.getEmail(), lrequest.getPassword()));
 
+        String refreshtoken = ""; 
+
         if(auth.isAuthenticated()){
 
-            return new AuthResponse(jwtservice.generateToken(lrequest.getEmail()));
+            return new AuthResponse(jwtservice.generateToken(lrequest.getEmail()), refreshtoken);
         }else 
         
                 throw new BadCredentialsException("Invalido...");

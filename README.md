@@ -1,6 +1,3 @@
-# handy-tasks
-To-do list
-
 # Handy Tasks ✅
 
 Aplicación de gestión de tareas con autenticación segura y manejo de usuarios.  
