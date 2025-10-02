@@ -60,5 +60,5 @@ Coloca tus capturas de pantalla en la carpeta `assets/` y referéncialas aquí:
 
 ![Backend en funcionamiento](assets/backendrun.png)
 ![Petición Http Get](assets/backendget.png)
-
+![Hola](assets/hola.png)
 
