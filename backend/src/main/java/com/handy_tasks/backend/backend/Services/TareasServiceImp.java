@@ -46,10 +46,9 @@ public List<Tareas> findByUsuarioPendiente() {
 }
    
     @Override
-    public Tareas crearTareas(Integer iduser, Tareas tarea) {
+    public Tareas crearTareas(Tareas tarea) {
         
-        Usuarios usuario = repousuarios.findById(iduser)
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado..."));
+        Usuarios usuario = usuariosService.currentUser();
 
         tarea.setUsuario(usuario);
         tarea.setFecha_creacion(LocalDateTime.now());
@@ -57,9 +56,6 @@ public List<Tareas> findByUsuarioPendiente() {
         return repotareas.save(tarea);
         
     }
-    
-  
-
 
    
     
