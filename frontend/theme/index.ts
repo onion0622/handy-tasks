@@ -1,7 +1,5 @@
 // theme/index.ts -- archivo que centraliza los temas para elegir 
 import { useColorScheme } from "react-native";
-
-
 //Constructor de el objeto tema, para poner los datos y los parametros que luego se van a elegir 
 type Theme = {
   colors: {

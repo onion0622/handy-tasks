@@ -13,6 +13,14 @@ export type Task = {
   prioridad: "alta" | "media" | "baja";
 };
 
+export type NewTaskInput = {
+  id: string;
+  titulo: string;
+  dueAt: string; // ISO fecha
+  done?: boolean;
+  prioridad: "alta" | "media" | "baja";
+};
+
 export type TaskFilter = "todos" | "hoy" | "semana";
 
 /** Helpers de fecha */
@@ -73,14 +81,26 @@ type TasksContextValue = {
   progressPercent: number; // 0..100
   // datos derivados
   listByFilter: Task[];
+  addTask: (t: NewTaskInput) => void;
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
 
 export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [tasks] = useState<Task[]>(mockTasks);
+  const [tasks,setTasks] = useState<Task[]>(mockTasks);
   const [filter, setFilter] = useState<TaskFilter>("todos");
   const [status, setStatus] = useState<StatusFilter>("all");
+
+  const addTask = (t: NewTaskInput) => {
+  const nueva: Task = {
+    id: Date.now().toString(),
+    titulo: t.titulo.trim(),
+    done: false,
+    dueAt: t.dueAt,
+    prioridad: t.prioridad,
+  };
+  setTasks(prev => [nueva, ...prev]);
+};
 
   // Parte para la barra de tareas
   const { total, completadas, pendientes, progressPercent, listByFilter } = useMemo(() => {
@@ -117,6 +137,7 @@ export const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) =
     pendientes,
     progressPercent,
     listByFilter,
+    addTask
   };
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>;
