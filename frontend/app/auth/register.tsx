@@ -1,6 +1,6 @@
 // app/(auth)/register.tsx
 import { useState } from "react";
-import { View, Text, Alert, Keyboard } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { authStyles } from "@/components/authForm/AuthForm.styles";
 import Input from "@/components/ui/Input";
 import { Link, router } from "expo-router";
@@ -38,8 +38,8 @@ export default function Register() {
     if (!username || !email || !pwd) return Alert.alert("Faltan datos");
     setLoading(true);
     try {
-      const {token} = await AuthAPI.register({ username, email, password: pwd });
-      await Token.set(token);
+      const {token, refreshtoken} = await AuthAPI.register({ username, email, password: pwd });
+      await Token.setTokens({ accessToken: token, refreshToken: refreshtoken });
       //console.log("JWT guardado =>", (await Token.get())?.slice(0, 20) + "..."); Log para probar si se guarda el token.
       router.replace({ pathname: "/(tabs)/tareas", params: { justRegistered: "1" } });  // Ahora el register hace auto-loggin la primera vez.
     } catch (e: any) {

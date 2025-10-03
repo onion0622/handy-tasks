@@ -19,8 +19,8 @@ export default function Login() {
     if (!email || !pwd) return Alert.alert("Faltan datos");
     setLoading(true);
     try {
-      const { token } = await AuthAPI.login({ email, password: pwd });
-      await Token.set(token); //Ahora la rutina va esperar por el token, y le va asignar el valor que obtenga. 
+      const { token, refreshtoken } = await AuthAPI.login({ email, password: pwd });
+        await Token.setTokens({ accessToken: token, refreshToken: refreshtoken }); //Ahora se validan los dos tokens
       //console.log("JWT guardado =>", (await Token.get())?.slice(0, 20) + "..."); Log para probar si se guarda el token.
       router.replace("/(tabs)/tareas"); // ir a la vista principal
     } catch (e: any) {
