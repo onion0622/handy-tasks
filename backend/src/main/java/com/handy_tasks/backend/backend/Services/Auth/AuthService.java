@@ -14,10 +14,12 @@ import com.handy_tasks.backend.backend.Data.AuthResponse;
 import com.handy_tasks.backend.backend.Data.LoginRequest;
 import com.handy_tasks.backend.backend.Data.RegisterRequest;
 import com.handy_tasks.backend.backend.Err.DuplicateResourceException;
+import com.handy_tasks.backend.backend.Model.RefreshToken;
 import com.handy_tasks.backend.backend.Model.Rol;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
 import com.handy_tasks.backend.backend.Services.Jwt.JwtService;
+import com.handy_tasks.backend.backend.Services.Token.RefreshTokenService;
 
 
 @Service
@@ -31,6 +33,9 @@ public class AuthService {
 
     @Autowired
     private JwtService jwtservice;
+
+    @Autowired
+    private RefreshTokenService refreshtokenser;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -50,11 +55,11 @@ public class AuthService {
 
         String token = jwtservice.generateToken(request.getEmail());
 
-        String refreshtoken = ""; 
+        RefreshToken rtcreado = refreshtokenser.crearRT(user); 
 
         repouser.save(user);
 
-        return new AuthResponse(token, refreshtoken);
+        return new AuthResponse(token, rtcreado.getToken());
 
     }
 
@@ -63,11 +68,13 @@ public class AuthService {
         Authentication auth = authmanager
         .authenticate(new UsernamePasswordAuthenticationToken(lrequest.getEmail(), lrequest.getPassword()));
 
-        String refreshtoken = ""; 
+       
 
         if(auth.isAuthenticated()){
 
-            return new AuthResponse(jwtservice.generateToken(lrequest.getEmail()), refreshtoken);
+            Usuarios usuario = repouser.findByEmail(lrequest.getEmail()).orElseThrow();
+            RefreshToken rtcreado = refreshtokenser.crearRT(usuario); 
+            return new AuthResponse(jwtservice.generateToken(lrequest.getEmail()), rtcreado.getToken());
         }else 
         
                 throw new BadCredentialsException("Invalido...");
