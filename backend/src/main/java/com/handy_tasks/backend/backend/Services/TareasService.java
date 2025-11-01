@@ -9,5 +9,6 @@ public interface TareasService {
     public List<Tareas> findByUsuarioCompletada();
     public List<Tareas> findByUsuarioPendiente();
     public Tareas crearTareas(Tareas tarea);
+    public Tareas actualizarTareas(Integer idtarea, Tareas tarea);
 
 }   

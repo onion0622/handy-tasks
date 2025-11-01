@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.handy_tasks.backend.backend.Model.Tareas;
 import com.handy_tasks.backend.backend.Model.Usuarios;
 import com.handy_tasks.backend.backend.Repo.RepoTareas;
-import com.handy_tasks.backend.backend.Repo.RepoUsuarios;
 
 
 @Service
@@ -17,8 +16,7 @@ public class TareasServiceImp implements TareasService{
 
     @Autowired
     private RepoTareas repotareas;
-    @Autowired
-    private RepoUsuarios repousuarios;
+   
     
     @Autowired
     private UsuariosServiceImp usuariosService;
@@ -55,8 +53,21 @@ public List<Tareas> findByUsuarioPendiente() {
         
         return repotareas.save(tarea);
         
-    }
+}
 
+@Override
+public Tareas actualizarTareas(Integer idtarea, Tareas tareaActualizada){
+    Usuarios usuario = usuariosService.currentUser();
+    Tareas tareaExistente = repotareas.findById(idtarea).orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+    if (!tareaExistente.getUsuario().getIduser().equals(usuario.getIduser())) {
+        throw new RuntimeException("No autorizado para modificar esta tarea");
+    }
+    tareaExistente.setTitulo(tareaActualizada.getTitulo());
+    tareaExistente.setCompletada(tareaActualizada.isCompletada());
+    tareaExistente.setFecha_limite(tareaActualizada.getFecha_limite());
+
+    return repotareas.save(tareaExistente);
+}
    
     
 } 
