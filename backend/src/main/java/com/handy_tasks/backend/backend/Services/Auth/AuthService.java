@@ -39,29 +39,26 @@ public class AuthService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public AuthResponse register(RegisterRequest request){
+   public AuthResponse register(RegisterRequest request){
 
-        if(repouser.existsByEmail(request.getEmail())){
-            throw new DuplicateResourceException("El email ya esta registrado");
-        }
-
-        Usuarios user = new Usuarios();
-
-        user.setNombre(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(encoder.encode(request.getPassword()));
-        user.setRol(Rol.USER);
-        user.setFecha_creacion(LocalDateTime.now());
-
-        String token = jwtservice.generateToken(request.getEmail());
-
-        RefreshToken rtcreado = refreshtokenser.crearRT(user); 
-
-        repouser.save(user);
-
-        return new AuthResponse(token, rtcreado.getToken());
-
+    if(repouser.existsByEmail(request.getEmail())){
+        throw new DuplicateResourceException("El email ya esta registrado");
     }
+
+    Usuarios user = new Usuarios();
+    user.setNombre(request.getUsername());
+    user.setEmail(request.getEmail());
+    user.setPassword(encoder.encode(request.getPassword()));
+    user.setRol(Rol.USER);
+    user.setFecha_creacion(LocalDateTime.now());
+
+    repouser.save(user);  // 👈 primero
+
+    String token = jwtservice.generateToken(request.getEmail());
+    RefreshToken rtcreado = refreshtokenser.crearRT(user);  // 👈 después
+
+    return new AuthResponse(token, rtcreado.getToken());
+}
 
     public AuthResponse verify(LoginRequest lrequest) {
         
